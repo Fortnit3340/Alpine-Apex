@@ -1,0 +1,39 @@
+name: Build Windows installer
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'game.html'
+      - 'main.cjs'
+      - 'package.json'
+      - '.github/workflows/windows-installer.yml'
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Get game files
+        uses: actions/checkout@v4
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install app dependencies
+        run: npm install
+      - name: Build Windows installer
+        run: npm run dist:win
+      - name: Upload installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: ALPINE-APEX-Windows-Installer
+          path: dist/*.exe
+          if-no-files-found: error
+          retention-days: 30

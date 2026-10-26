@@ -1,0 +1,18 @@
+{
+  "name": "alpine-apex",
+  "version": "1.0.0",
+  "description": "ALPINE APEX racing game",
+  "main": "main.cjs",
+  "author": "ALPINE APEX",
+  "license": "UNLICENSED",
+  "scripts": { "start": "electron .", "dist:win": "electron-builder --win nsis" },
+  "devDependencies": { "electron": "^35.0.0", "electron-builder": "^26.0.12" },
+  "build": {
+    "appId": "com.alpineapex.game",
+    "productName": "ALPINE APEX",
+    "directories": { "output": "dist" },
+    "files": ["main.cjs", "index.html", "game.html", "package.json"],
+    "win": { "target": [{ "target": "nsis", "arch": ["x64"] }] },
+    "nsis": { "oneClick": false, "allowToChangeInstallationDirectory": true, "createDesktopShortcut": true, "createStartMenuShortcut": true }
+  }
+}
